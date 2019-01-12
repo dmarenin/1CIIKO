@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="event" type="event"/>
+  <xs:element name="eventAttribute" type="eventAttribute"/>
+  <xs:element name="eventsList" type="eventsList"/>
+  <!-- События -->
+  <xs:complexType name="eventsList">
+    <xs:sequence>
+      <!-- Список событий -->
+      <xs:element ref="event" minOccurs="0" maxOccurs="unbounded"/>
+      <!-- Ревизия списка событий -->
+      <xs:element name="revision" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- Событие -->
+  <xs:complexType name="event">
+    <xs:sequence>
+      <!-- Список аттрибутов события -->
+      <!-- Аттрибуты события могут частично пересекаться с атрибутами событий, перечисленных в groupsList.group.type.attribute -->
+      <!-- Некоторые события имеют обязательные атрибуты - по таким пересеченеи обязательно -->
+      <xs:element name="attribute" type="eventAttribute" minOccurs="0" maxOccurs="unbounded"/>
+      <!-- Дата и время события -->
+      <xs:element name="date" type="xs:dateTime" minOccurs="0"/>
+      <!-- id департамента (guid) - для iikoChain -->
+      <xs:element name="departmentId" type="xs:string" minOccurs="0"/>
+      <!-- Уникальный идентификатор события (guid) -->
+      <xs:element name="id" type="xs:string" minOccurs="0"/>
+      <!-- Тип события = resto.event.EventTypeMetadata.name = groupsList.group.type.id -->
+      <xs:element name="type" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- Аттрибут события -->
+  <xs:complexType name="eventAttribute">
+    <xs:sequence>
+      <!-- Имя атрибута -->
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <!-- Значение атрибута -->
+      <xs:element name="value" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

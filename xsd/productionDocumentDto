@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="document" type="productionDocumentDto"/>
+
+    <xs:complexType name="productionDocumentDto">
+        <xs:sequence>
+            <!--Концепция-->
+            <xs:element name="conception" type="xs:string" minOccurs="0"/>
+            <!--Комментарий-->
+            <xs:element name="comment" type="xs:string" minOccurs="0"/>
+            <!--Номер документа-->
+            <xs:element name="documentNumber" type="xs:string" minOccurs="0"/>
+            <!--
+            Дата документа.
+            Поддерживаемые форматы:
+            yyyy-MM-ddTHH:mm:ss, yyyy-MM-dd (dd.MM.yyyy не рекомендуется).
+            -->
+            <xs:element name="dateIncoming" type="xs:string" minOccurs="0"/>
+            <!--На склад (guid)-->
+            <xs:element name="storeTo" type="xs:string" minOccurs="0"/>
+            <!--Со склада (guid)-->
+            <xs:element name="storeFrom" type="xs:string" minOccurs="0"/>
+            <!--Позиции документа-->
+            <xs:element name="items" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="item" type="productionDocumentItemDto" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--Позиция документа-->
+    <xs:complexType name="productionDocumentItemDto">
+        <xs:sequence>
+            <!--Количество товара в его основных единицах измерения-->
+            <xs:element name="amount" type="xs:decimal" minOccurs="0"/>
+            <!--Товар (guid)-->
+            <xs:element name="product" type="xs:string" minOccurs="0"/>
+            <!--Товар (артикул). Можно задать вместо guid товара начиная с 5.0, guid имеет приоритет-->
+            <xs:element name="productArticle" type="xs:string" minOccurs="0"/>
+            <!--Порядковый номер в документе-->
+            <xs:element name="num" type="xs:int" minOccurs="0"/>
+            <!--Фасовка (guid)-->
+            <xs:element name="containerId" type="xs:string" minOccurs="0"/>
+            <!--Базовая единица измерения (guid)-->
+            <xs:element name="amountUnit" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

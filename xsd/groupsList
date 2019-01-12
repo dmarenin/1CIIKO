@@ -1,0 +1,52 @@
+<!-- Схема описания дерева событий журнала событий -->
+<!-- Дерево выдается в качетсве линейной структуры -->
+<!-- групп событий. Информация об иерархии групп -->
+<!-- внутри древовидной структуры теряется -->
+<!-- Кроме этого, теряется информация об обязательности и необязательности атрибутов событий -->
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="group" type="group"/>
+  <xs:element name="type" type="type"/>
+  <xs:element name="attribute" type="attribute"/>
+  <xs:element name="groupsList" type="groupsList"/>
+  <!-- Дерево событий состоит из списка групп -->
+  <xs:complexType name="groupsList">
+    <xs:sequence>
+      <xs:element ref="group" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- Элементы этого списка - группы событий -->
+  <xs:complexType name="group">
+    <xs:sequence>
+      <!-- Идентификатор группы = resto.event.EventGroupMetadata.id )-->
+      <xs:element name="id" type="xs:string" minOccurs="0"/>
+      <!-- Имя группы = resto.event.EventGroupMetadata.name -->
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <!-- Список событий, входящих в данную группу-->
+      <xs:element ref="type" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- Событие Журнала Событий -->
+  <xs:complexType name="type">
+    <!-- Каждое событие состоит из набора -->
+    <xs:sequence>
+      <!-- Список Атрибутов события -->
+      <xs:element name="attribute" type="attribute" minOccurs="0" maxOccurs="unbounded"/>
+      <!-- Идентификатор события = resto.event.EventTypeMetadata.id -->
+      <xs:element name="id" type="xs:string" minOccurs="0"/>
+      <!-- Имя события = resto.event.EventTypeMetadata.name -->
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <!-- Важность события (число) (0 - Низкая, 1 - Средняя, 2 - Высокая) -->
+      <xs:element name="severity" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- Атрибут события -->
+  <xs:complexType name="attribute">
+    <xs:sequence>
+      <!-- Идентификатор обязательного аттрибута = resto.event.EventAttributeMetadata.id -->
+      <xs:element name="id" type="xs:string" minOccurs="0"/>
+      <!-- Имя обязательного аттрибута = resto.event.EventAttributeMetadata.name -->
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
